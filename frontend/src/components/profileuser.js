@@ -1,24 +1,29 @@
 import { Text,StyleSheet,Image,View,ScrollView,FlatList,Button,Pressable, TouchableOpacity } from "react-native"
+import { useState } from "react";
 import locationform from "../locationform";
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-export default function Profile(){
+export default function ProfileClg(){
   // const onPress = () => <locationform/>;
-  const About = () => <locationform/>;
+  const [Clicked, setClicked] = useState(false)
+  const locHandler = () => {
+    setClicked(true);}
   profilename = ""
     return(
-      
       <View style={styles.container}>
-        <View style={[styles.card,styles.shadowProp]}>
-                            <Text style={styles.head}>Name: {profilename}</Text>
-                            <Text style={styles.crowd}></Text>
-                            <View style={{flexDirection:"row",justifyContent:"center",top:470,left:40}}>
-                              <TouchableOpacity onpress={About}
-                                style={styles.button}> 
-                                <Text style={{color:'white',fontSize:15}}>Create New location</Text>
-                              </TouchableOpacity>
-                            </View>
-                        </View>
-      </View>       
+      <View style={[styles.card,styles.shadowProp]}>
+          <Text style={styles.head}>Name: {profilename}</Text>
+          <Text style={styles.crowd}></Text>
+          <View style={{flexDirection:"row",justifyContent:"center",top:470,left:40}}>
+              <TouchableOpacity onpress={locHandler}
+              style={styles.button}> 
+              
+              <Text style={{color:'white',fontSize:15}}>Create New location</Text>
+              </TouchableOpacity>
+          </View>
+      </View>
+      </View>
     )
 }
 
