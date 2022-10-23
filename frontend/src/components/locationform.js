@@ -4,6 +4,8 @@ import { Text,StyleSheet,Image,View,ScrollView,FlatList,Button,Pressable, Toucha
 export default function Locationform(){
     const onPress = () => 1;
     return(
-        <TextInput>TextInput</TextInput>
+        <View>
+            <TextInput>TextInput</TextInput>
+        </View>
     );
 }

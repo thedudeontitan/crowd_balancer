@@ -1,63 +1,54 @@
 import { Text,StyleSheet,Image,View,ScrollView,FlatList,Button,Pressable, TouchableOpacity } from "react-native"
-import { useState } from "react";
-import locationform from "./locationform";
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { useRoute } from "@react-navigation/native";
 
 
-const Profile = () => {
-    return (
-        <View style={styles.container}>
-        <View style={[styles.card,styles.shadowProp]}>
-            <Text style={styles.head}>Name: {profilename}</Text>
-            <Text style={styles.crowd}></Text>
-            <View style={{flexDirection:"row",justifyContent:"center",top:470,left:40}}>
-                <TouchableOpacity onpress={setClicked=true}
-                style={styles.button}> 
-
-                <Text style={{color:'white',fontSize:15}}>Create New location</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-        </View>     
-        );
-};
-                
-  
-const Stack = createStackNavigator();
-
-export default function ProfileClg(){
-  // const onPress = () => <locationform/>;
-  const About = () => <locationform/>;
-  const [Clicked, setClicked] = useState(false)
-  profilename = ""
+export default function Floor({DATA,route}){
+    const onPress = () => 1;
+    // const route = useRoute();
+    const floors = route.params.floors;
+    
     return(
-    <Stack.Navigator initialRouteName="LoginScreen">
-        <Stack.Screen
-        name="LoginScreen"
-        component={Profile}>
-     
-      </Stack.Screen>
-                        <Stack.Screen
-        name="Add location"
-        component={locationform}>
-                        </Stack.Screen>
-      </Stack.Navigator>
-
+        
+        <View style={styles.container}>
+            <Text style={styles.location}>
+                FLOORS
+            </Text>
+            <FlatList
+                data={floors}
+                
+                renderItem={({item})=>(
+                        <View style={[styles.card,styles.shadowProp]}>
+                            <Text style={styles.head}>{item.floor_no}</Text>
+                            <Text style={styles.crowd}>Estimated crowd: {item.total_peoplr}</Text>
+                            <View style={styles.bar}>
+                                <View style={{...styles.barVal,width:`${(item.total_peoplr/item.total_capacity)*100}%`}}>
+                                </View>
+                            </View>
+                            <View style={{flexDirection:"row",justifyContent:"center"}}>
+                              <TouchableOpacity onpress={onPress}
+                                style={styles.button}> 
+                                <Text style={{color:'white',fontSize:15}}>Notify me</Text>
+                              </TouchableOpacity>
+                            </View>
+                        </View>
+                    )
+                }
+                keyExtractor={item => item.id}
+            />
+     </View>       
     )
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'black',
+      backgroundColor: '#CDB4DB',
       
     },
     card:{
-      alignSelf:'auto',
         backgroundColor: "white",
         width:"90%",
-        height:"95%",
+        height:210,
         margin: 15,
         borderRadius: 10
     },
@@ -100,7 +91,6 @@ const styles = StyleSheet.create({
     barVal:{
         backgroundColor:"#FFC8DD",
         height:"100%",
-        width:"80%",
         alignSelf:'flex-start',
         borderTopLeftRadius:90,
         borderBottomLeftRadius:90

@@ -1,31 +1,17 @@
 import { Text,StyleSheet,Image,View,ScrollView,FlatList,Button,Pressable, TouchableOpacity } from "react-native"
+import { useNavigation } from "@react-navigation/native";
 
 
-const DATA = [
-  {
-    id: 1,
-    location: 'LIBRARY',
-    crowd: "80",
-  },
-  {
-    id: 2,
-    location: 'MESS',
-    crowd: 60,
-  },
-  {
-    id: 3,
-    location: 'COMPUTER LAB',
-    crowd: 50,
-  },
-  {
-    id: 4,
-    location: 'GROUND',
-    crowd: 50,
-  },
-];
 
-export default function Home(){
+export default function Home({DATA,navigation}){
   const onPress = () => 1;
+
+  // const navigation = useNavigation();
+
+  const redirectFloor = (floors)=>{
+    navigation.navigate("Floor",{floors:floors})
+  }
+
     return(
       
         <View style={styles.container}>
@@ -37,8 +23,8 @@ export default function Home(){
                 
                 renderItem={({item})=>(
                         <View style={[styles.card,styles.shadowProp]}>
-                            <Text style={styles.head}>{item.location}</Text>
-                            <Text style={styles.crowd}>Estimated crowd: {item.crowd}</Text>
+                            <Text style={styles.head}>{item.name}</Text>
+                            <Text style={styles.crowd}>Estimated crowd: 0</Text>
                             <View style={styles.bar}>
                                 <View style={styles.barVal}>
                                 </View>
@@ -48,7 +34,7 @@ export default function Home(){
                                 style={styles.button}> 
                                 <Text style={{color:'white',fontSize:15}}>Notify me</Text>
                               </TouchableOpacity>
-                              <TouchableOpacity onpress={onPress} 
+                              <TouchableOpacity onPress={()=>{redirectFloor(item.floors)}} 
                                 style={styles.button}> 
                                 <Text style={{color:'white',fontSize:15}}>Details</Text>
                               </TouchableOpacity>
