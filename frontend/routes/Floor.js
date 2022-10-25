@@ -1,17 +1,22 @@
-import { Text,StyleSheet,Image,View,ScrollView,FlatList,Button,Pressable, TouchableOpacity } from "react-native"
+import { Text,StyleSheet,View,FlatList, TouchableOpacity,Alert} from "react-native"
 import { useRoute } from "@react-navigation/native";
 
 
-export default function Floor({DATA,route}){
+export default function Floor(){
     const onPress = () => 1;
-    // const route = useRoute();
-    const floors = route.params.floors;
+    const route = useRoute();
+
+    const {floors,location} = route.params;
+
+    const notificationActive = ()=>{
+        Alert.alert("Notification","You will be notified once crowd is less")
+    }
     
     return(
         
         <View style={styles.container}>
             <Text style={styles.location}>
-                FLOORS
+                {location}
             </Text>
             <FlatList
                 data={floors}
@@ -19,13 +24,13 @@ export default function Floor({DATA,route}){
                 renderItem={({item})=>(
                         <View style={[styles.card,styles.shadowProp]}>
                             <Text style={styles.head}>{item.floor_no}</Text>
-                            <Text style={styles.crowd}>Estimated crowd: {item.total_peoplr}</Text>
+                            <Text style={styles.crowd}>Estimated crowd: {item.total_people}</Text>
                             <View style={styles.bar}>
-                                <View style={{...styles.barVal,width:`${(item.total_peoplr/item.total_capacity)*100}%`}}>
+                                <View style={{...styles.barVal,width:`${(item.total_people/item.total_capacity)*100}%`}}>
                                 </View>
                             </View>
                             <View style={{flexDirection:"row",justifyContent:"center"}}>
-                              <TouchableOpacity onpress={onPress}
+                              <TouchableOpacity onPress={notificationActive}
                                 style={styles.button}> 
                                 <Text style={{color:'white',fontSize:15}}>Notify me</Text>
                               </TouchableOpacity>
@@ -42,13 +47,13 @@ export default function Floor({DATA,route}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#CDB4DB',
+      backgroundColor: 'white',
       
     },
     card:{
         backgroundColor: "white",
         width:"90%",
-        height:210,
+        height:240,
         margin: 15,
         borderRadius: 10
     },
@@ -60,11 +65,11 @@ const styles = StyleSheet.create({
         shadowRadius: 100,
       },
     location:{
-        marginTop:10,
-        margin:10,
-        fontSize:40,
+        marginTop:20,
+        fontSize:45,
         fontWeight:'bold',
-        alignSelf:'center'
+        alignSelf:'center',
+        color:'#7b03fc'
     },
     head:{
         alignSelf:'center',
@@ -91,12 +96,13 @@ const styles = StyleSheet.create({
     barVal:{
         backgroundColor:"#FFC8DD",
         height:"100%",
+        width:"80%",
         alignSelf:'flex-start',
         borderTopLeftRadius:90,
         borderBottomLeftRadius:90
     },
     button:{
-      marginTop:15,
+      marginTop:25,
       marginHorizontal:20,
       alignItems: 'center',
       justifyContent: 'center',
@@ -104,7 +110,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 32,
       borderRadius: 4,
       elevation: 3,
-      backgroundColor: '#CDB4DB',
+      backgroundColor: '#7b03fc',
     },
   });
   

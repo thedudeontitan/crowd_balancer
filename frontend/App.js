@@ -1,71 +1,29 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Home from './src/components/home';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ProfileUser from './src/components/profileuser';
-import ProfileClg from './src/components/profileclg';
-import Locationform from './src/components/locationform';
 
-import Floor from './src/components/floor';
+import Home from './routes/Home';
+import Location from './routes/Location';
+import ProfileUser from './routes/Profile';
+import Floor from './routes/Floor';
+import UserLogIn from './routes/Login';
 
-const Tab = createBottomTabNavigator();
+import ContextProvider from './context';
 
-const DATA = [
-  {
-      floors: [
-          {
-              floor_no: "LIB_NO1",
-              id: 1,
-              total_capacity: 200,
-              total_peoplr: 0
-          }
-      ],
-      id: 1,
-      name: "Library"
-  },
-  {
-      floors: [
-          {
-              floor_no: "MESS_NO1",
-              id: 2,
-              total_capacity: 200,
-              total_peoplr:100
-          }
-      ],
-      id: 2,
-      name: "MESS"
-  }
-]
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [isCollege, setIsCollege] = useState(false);
-  return(
-    <NavigationContainer>    
-          <Tab.Navigator>
-            <Tab.Screen name="Home">
-              {props => <Home {...props} DATA={DATA}/>}
-            </Tab.Screen>
-            <Tab.Screen name="Floor">
-              {props => <Floor {...props} DATA={DATA}/>}
-            </Tab.Screen>
+  return (
+    <ContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name='UserLogIn' component={UserLogIn} options={{headerShown:false}}/>
+          <Stack.Screen name='Home' component={Home} options={{headerShown:false}}/>
+          <Stack.Screen name='Location' component={Location} options={{headerTitle:"Current Crowd"}}/>
+          <Stack.Screen name='Floor' component={Floor} options={{headerTitle:"Floor"}}/>
+          <Stack.Screen name='ProfileUser' component={ProfileUser} options={{headerTitle:"Profile"}}/>
 
-            <Tab.Screen name="Profile" component={isCollege ? ProfileClg : ProfileUser} />
-            
-            <Tab.Screen name="Locationform" component={Locationform}/>
-          </Tab.Navigator>
-    </NavigationContainer>
-
-);  
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ContextProvider>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  
-});

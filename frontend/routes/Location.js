@@ -1,15 +1,59 @@
-import { Text,StyleSheet,Image,View,ScrollView,FlatList,Button,Pressable, TouchableOpacity } from "react-native"
-import { useNavigation } from "@react-navigation/native";
+import { Text,StyleSheet,View,FlatList, TouchableOpacity } from "react-native"
+
+
+const DATA = [
+    {
+        "floors": [
+            {
+                "floor_no": "LIB_NO1",
+                "id": 1,
+                "total_capacity": 200,
+                "total_people": 50
+            },
+            {
+                "floor_no": "LIB_NO2",
+                "id": 2,
+                "total_capacity": 200,
+                "total_people": 40
+            },
+            {
+                "floor_no": "LIB_NO3",
+                "id": 3,
+                "total_capacity": 150,
+                "total_people": 70
+            }
+        ],
+        "id": 1,
+        "name": "Library",
+        "total_prople":90,
+        "total_capacity":400
+    },
+    {
+        "floors": [
+            {
+                "floor_no": "MESS_NO1",
+                "id": 2,
+                "total_capacity": 100,
+                "total_people": 20
+            }
+        ],
+        "id": 2,
+        "name": "MESS",
+        "total_prople":60,
+        "total_capacity":100
+    }
+]
+  
 
 
 
-export default function Home({DATA,navigation}){
-  const onPress = () => 1;
+export default function Location({navigation}){
 
-  // const navigation = useNavigation();
 
-  const redirectFloor = (floors)=>{
-    navigation.navigate("Floor",{floors:floors})
+  // const [DATA,setData] = useState([]);
+
+  const redirectFloor = (floors,location)=>{
+    navigation.navigate("Floor",{floors:floors,location:location})
   }
 
     return(
@@ -20,21 +64,21 @@ export default function Home({DATA,navigation}){
             </Text>
             <FlatList
                 data={DATA}
-                
+                style={{marginTop:30}}
                 renderItem={({item})=>(
                         <View style={[styles.card,styles.shadowProp]}>
                             <Text style={styles.head}>{item.name}</Text>
-                            <Text style={styles.crowd}>Estimated crowd: 0</Text>
+                            <Text style={styles.crowd}>Estimated crowd: {item.total_prople}</Text>
                             <View style={styles.bar}>
-                                <View style={styles.barVal}>
+                                <View style={{...styles.barVal,width:`${(item.total_prople/item.total_capacity)*100}%`}}>
                                 </View>
                             </View>
                             <View style={{flexDirection:"row",justifyContent:"center"}}>
-                              <TouchableOpacity onpress={onPress}
+                              <TouchableOpacity 
                                 style={styles.button}> 
                                 <Text style={{color:'white',fontSize:15}}>Notify me</Text>
                               </TouchableOpacity>
-                              <TouchableOpacity onPress={()=>{redirectFloor(item.floors)}} 
+                              <TouchableOpacity onPress={()=>{redirectFloor(item.floors,item.name)}} 
                                 style={styles.button}> 
                                 <Text style={{color:'white',fontSize:15}}>Details</Text>
                               </TouchableOpacity>
@@ -51,13 +95,13 @@ export default function Home({DATA,navigation}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#CDB4DB',
+      backgroundColor: 'white',
       
     },
     card:{
         backgroundColor: "white",
         width:"90%",
-        height:210,
+        height:240,
         margin: 15,
         borderRadius: 10
     },
@@ -69,11 +113,11 @@ const styles = StyleSheet.create({
         shadowRadius: 100,
       },
     location:{
-        marginTop:10,
-        margin:10,
-        fontSize:40,
+        marginTop:20,
+        fontSize:45,
         fontWeight:'bold',
-        alignSelf:'center'
+        alignSelf:'center',
+        color:'#7b03fc'
     },
     head:{
         alignSelf:'center',
@@ -100,13 +144,12 @@ const styles = StyleSheet.create({
     barVal:{
         backgroundColor:"#FFC8DD",
         height:"100%",
-        width:"80%",
         alignSelf:'flex-start',
         borderTopLeftRadius:90,
         borderBottomLeftRadius:90
     },
     button:{
-      marginTop:15,
+      marginTop:25,
       marginHorizontal:20,
       alignItems: 'center',
       justifyContent: 'center',
@@ -114,7 +157,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 32,
       borderRadius: 4,
       elevation: 3,
-      backgroundColor: '#CDB4DB',
+      backgroundColor: '#7b03fc',
     },
   });
   

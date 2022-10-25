@@ -1,7 +1,7 @@
-import React, {FC, ReactElement, useState} from 'react';
+import {useContext} from 'react';
 
 import { Controller, useForm } from 'react-hook-form';
-
+import { useNavigation } from '@react-navigation/native';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -16,17 +16,22 @@ import {
 } from 'react-native';
 // Components
 import SizedBox from './SizedBox';
-
+import {Context} from '../context';
 
 export default function UserLogIn(){
-    const { control, handleSubmit } = useForm<FormData>({
+
+    const navigation = useNavigation();
+    const context = useContext(Context);
+
+    const { control, handleSubmit } = useForm({
         defaultValues: {
           email: '',
           password: '',
         },
       });
       const onSubmit = handleSubmit(({ email, password }) => {
-        Alert.alert('Data', `Email: ${email}\nPassword: ${password}`);
+        // context.setEmail(email);
+        navigation.navigate("Home");
       });
   return (
     <View style={styles.root}>
@@ -37,11 +42,11 @@ export default function UserLogIn(){
         >
           <Text style={styles.title}>Welcome back!</Text>
 
-          <SizedBox height={8} />
+          <SizedBox height={8} width={10} />
 
           <Text style={styles.subtitle}>Sign in to your account</Text>
 
-          <SizedBox height={32} />
+          <SizedBox height={32}  width={10}/>
 
           <Pressable>
             <View style={styles.form}>

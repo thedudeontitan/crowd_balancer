@@ -1,56 +1,34 @@
 import { Text,StyleSheet,Image,View,ScrollView,FlatList,Button,Pressable, TouchableOpacity } from "react-native"
-import { useState } from "react";
-import locationform from "./locationform";
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { useContext } from "react";
+import {Context} from "../context";
 
+export default function ProfileUser(){
 
-const Profile = () => {
-    return (
-        <View style={styles.container}>
-        <View style={[styles.card,styles.shadowProp]}>
-            <Text style={styles.head}>Name: {profilename}</Text>
-            <Text style={styles.crowd}></Text>
-            <View style={{flexDirection:"row",justifyContent:"center",top:470,left:40}}>
-                <TouchableOpacity onpress={setClicked=true}
-                style={styles.button}> 
-
-                <Text style={{color:'white',fontSize:15}}>Create New location</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-        </View>     
-        );
-};
-                
+  const onPress = () =>"init"
+  const context = useContext(Context);
   
-const Stack = createStackNavigator();
-
-export default function ProfileClg(){
-  // const onPress = () => <locationform/>;
-  const About = () => <locationform/>;
-  const [Clicked, setClicked] = useState(false)
-  profilename = ""
-    return(
-    <Stack.Navigator initialRouteName="LoginScreen">
-        <Stack.Screen
-        name="LoginScreen"
-        component={Profile}>
-     
-      </Stack.Screen>
-                        <Stack.Screen
-        name="Add location"
-        component={locationform}>
-                        </Stack.Screen>
-      </Stack.Navigator>
-
+  console.log(context.email)
+  return(
+      <View style={styles.container}>
+      <View style={[styles.card,styles.shadowProp]}>
+          <Text style={styles.head}>Hello {context.email}</Text>
+          <Text style={styles.crowd}></Text>
+          <View style={{flexDirection:"row",justifyContent:"center",top:470,left:40}}>
+              <TouchableOpacity
+              style={styles.button}> 
+              
+                <Text style={{color:'white',fontSize:15}}>Create New location</Text>
+              </TouchableOpacity>
+          </View>
+      </View>
+      </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'black',
+      backgroundColor: '#b67aff',
       
     },
     card:{
@@ -114,7 +92,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 32,
       borderRadius: 4,
       elevation: 3,
-      backgroundColor: '#CDB4DB',
+      backgroundColor: '#7b03fc',
     },
   });
   
